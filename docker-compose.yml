@@ -1,0 +1,45 @@
+version: "3.8"
+
+services:
+  nginx:
+    image: nginx:1.19.0-alpine
+    restart: unless-stopped
+    volumes:
+      - ./:/usr/src/app
+      - ./:/etc/nginx/conf.d/
+    ports:
+      - "80:80"
+    networks:
+      - web
+  redis:
+    image: redis:6.0.4-alpine
+    ports:
+      - "6379:6379"
+    networks:
+      - web
+    command: redis-server --port 6379
+  db:
+    image: postgres:11.8
+    networks:
+      - web
+    environment:
+      POSTGRES_USERNAME: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DATABASE}
+  app:
+    build: .
+    working_dir: /usr/src/app
+    depends_on:
+      - db
+      - nginx
+    networks:
+      - web
+    environment:
+      DB_HOST: ${DOCKER_DB}
+      APP_KEY: ${APP_KEY}
+      JWT_SECRET: ${JWT_SECRET}
+      DB_CONNECTION: ${DB_CONNECTION}
+      APP_URL: ${APP_URL}
+      APP_ENV: ${APP_ENV}
+networks:
+  web:
