@@ -212,14 +212,12 @@ const Navbar = (): JSX.Element => {
             <>
               <Link to="/login">
                 <IconButton className={classes.navBarLink}>
-                  Login
                   <FontAwesomeIcon icon={faSignInAlt} />
                 </IconButton>
               </Link>
               <Link to="/register">
                 <IconButton className={classes.navBarLink}>
-                  Register
-                  <FontAwesomeIcon icon={faSignInAlt} />
+                  <FontAwesomeIcon icon={faUserPlus} />
                 </IconButton>
               </Link>
             </>
