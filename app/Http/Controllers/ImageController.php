@@ -190,17 +190,19 @@ class ImageController extends Controller
 
         $this->authorize('view', $image);
 
-        $image->favorited = Favorite::where([
-            ['user_id', Auth::user()->id],
-            ['image_id', $image->id]
-        ])->exists();
-        $user = Auth::user();
-
-        if (Auth::user()->id === $image->user_id) {
-            $image->isOwnedByViewingUser = true;
+        if (Auth::check()) {
+            $image->favorited = Favorite::where([
+                ['user_id', Auth::user()->id],
+                ['image_id', $image->id]
+            ])->exists();
             $user = Auth::user();
-            if ($user->feature_image_id !== null) {
-                $image->featured = Auth::user()->feature_image_id === $image->id;
+
+            if (Auth::user()->id === $image->user_id) {
+                $image->isOwnedByViewingUser = true;
+                $user = Auth::user();
+                if ($user->feature_image_id !== null) {
+                    $image->featured = Auth::user()->feature_image_id === $image->id;
+                }
             }
         }
 
