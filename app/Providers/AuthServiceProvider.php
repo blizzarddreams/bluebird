@@ -2,7 +2,7 @@
 
 namespace Bluebird\Providers;
 
-use Laravel\Passport\Passport;
+//use Laravel\Passport\Passport;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Contracts\Auth\Access\Gate;
 // use Illuminate\Support\Facades\Gate as GateProvider;
@@ -36,7 +36,7 @@ class AuthServiceProvider extends ServiceProvider
           return $user->id === $comment->user->id;
         });
 
-        Passport::routes();
+        //Passport::routes();
     }
 
 }

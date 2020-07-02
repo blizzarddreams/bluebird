@@ -13,7 +13,7 @@ class AuthController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:web', ['except' => ['login', 'logout']]);
+       // $this->middleware('auth:web');//, ['except' => ['login', 'logout', 'register']]);
     }
 
     /**
@@ -58,12 +58,13 @@ class AuthController extends Controller
     {
         $validated = $request->validated();
         $user = User::create([
-            'name' => $request['name'],
-            'email' => $request['email'],
-            'birthday' => $request['birthday'],
-            'password' => Hash::make($request['password'])
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'birthday' => $validated['birthday'],
+            'password' => Hash::make($validated['password'])
         ]);
         $user->save();
+        return response()->json(['success' => true]);
         //Auth::login($user);
     }
 

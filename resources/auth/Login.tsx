@@ -73,7 +73,6 @@ const Login = (): JSX.Element => {
 
   const handleLoginSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    console.log(csrf);
     fetch("/login", {
       method: "POST",
       headers: {
@@ -86,10 +85,11 @@ const Login = (): JSX.Element => {
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
-          console.log(data);
           Cookies.set("email", data.email);
           Cookies.set("name", data.name);
           history.push("/");
+        } else {
+          setErrors({ ...errors, ...data.errors });
         }
       });
   };

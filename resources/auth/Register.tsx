@@ -76,7 +76,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
   },
   datePicker: {
-    width: "50%",
+    width: "40%",
     "& .MuiInputBase-root": {
       color: "#eee",
     },
@@ -87,16 +87,17 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 const Register = (): JSX.Element => {
+  const csrf = Cookies.get("XSRF-TOKEN")!;
   const darkMode = useContext(DarkModeContext);
   const classes = useStyles({ darkMode });
   const [errors, setErrors] = useState({
-    username: [],
+    name: [],
     password: [],
     email: [],
   });
   const [birthday, setBirthday] = useState<Date>(new Date());
   const [data, setData] = useState({
-    username: "",
+    name: "",
     password: "",
     email: "",
   });
@@ -117,16 +118,19 @@ const Register = (): JSX.Element => {
     setData({ ...data, [name]: e.target.value });
   };
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
+    console.log(birthday);
     fetch("/register", {
       method: "POST",
       headers: {
+        Accept: "application/json",
         "Content-Type": "application/json",
-        "X-CSRF-TOKEN": Cookies.get("XSRF-TOKEN")!,
+        "X-XSRF-TOKEN": csrf,
       },
       body: JSON.stringify({
         ...data,
+        birthday,
       }),
     })
       .then((res) => res.json())
@@ -143,20 +147,20 @@ const Register = (): JSX.Element => {
     if (date !== null) setBirthday(date.toDate());
   };
   return (
-    <form onSubmit={onSubmit}>
+    <form onSubmit={handleSubmit}>
       <Box display="flex" flexDirection="column" alignItems="center">
         <Typography variant="h2">Register</Typography>
 
         <TextField
-          name="username"
+          name="name"
           id="outlined-basic"
           fullWidth
           label="Username"
           onChange={handleRegisterChange}
-          value={data.username}
+          value={data.name}
           variant="outlined"
-          error={errors.username.length > 0}
-          helperText={errors.username.join("\n")}
+          error={errors.name.length > 0}
+          helperText={errors.name.join("\n")}
           classes={{
             root: classes.input,
           }}
@@ -199,7 +203,7 @@ const Register = (): JSX.Element => {
             disableToolbar
             disableFuture
             fullWidth
-            format="MM/dddd/yyyy"
+            format="MM/DD/YYYY"
             margin="normal"
             id="date-picker-inline"
             label="Birthday"

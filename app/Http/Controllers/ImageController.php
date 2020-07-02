@@ -129,19 +129,19 @@ class ImageController extends Controller
      */
     public function store(ImageRequest $request)
     {
-        $this->authorize('create');
+        //$this->authorize('create');
 
         $validated = $request->validated();
 
         $user = Auth::user();
         $image = new Image;
 
-        $tags = explode(',', str_replace('/\s+/', '', $validated->tags));
-        $image->image_url = $validated->file('image')->store($user->name);
+        $tags = explode(',', str_replace('/\s+/', '', $validated['tags']));
+        $image->image_url = $validated['image']->store($user->name);
         $image_extension = '.'.\File::extension($image->image_url);
         $image_url_no_extension = basename($image->image_url, $image_extension);
 
-        $thumbnail = Intervention::make($validated->file('image'));
+        $thumbnail = Intervention::make($validated['image']);
         $thumbnail->resize(200, 200, function ($i) {
             $i->aspectRatio();
         })->encode('png');
@@ -150,9 +150,9 @@ class ImageController extends Controller
         Storage::put($image->thumbnail_url, $thumbnail->__toString());
 
         $image->user_id = $user->id;
-        $image->description = $validated->description;
-        $image->title = $validated->title;
-        $image->nsfw = $validated->rating === 'nsfw' ? true : false;
+        $image->description = $validated['description'];
+        $image->title = $validated['title'];
+        $image->nsfw = $validated['rating'] === 'nsfw' ? true : false;
 
         $image->save();
 

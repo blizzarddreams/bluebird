@@ -25,9 +25,10 @@
 
 // Users
 
-Route::get('/image/{id}', 'ImageController@show');
 Route::post('/login', 'AuthController@login');
+Route::post('/register', 'AuthController@register');
 Route::get('/logout', 'AuthController@logout');
+Route::get('/image/{id}', 'ImageController@show');
 Route::post('/image/favorite', 'ImageController@favorite');
 Route::post('/image/feature', 'ImageController@feature');
 Route::get('/image/{id}/edit', 'ImageController@edit');

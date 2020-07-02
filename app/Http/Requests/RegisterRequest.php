@@ -13,7 +13,25 @@ class RegisterRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
+    }
+
+    /**
+     * Messages for validation errors.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'name.required' => 'A username is required.',
+            'email.required' => 'An email is required.',
+            'password.required' => 'A password is required.',
+            'birthday.required' => 'A birthday is required.',
+            'name.unique' => ':input is already taken.',
+            'email.unique' => ':input is already taken.',
+            'password.min' => 'password must be equal or more than 8 characters.',
+        ];
     }
 
     /**
@@ -25,8 +43,8 @@ class RegisterRequest extends FormRequest
     {
         return [
             'name' => 'required|unique:users|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|min:8|string|confirmed',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:8|string',//|confirmed',
             'birthday' => 'required|date',
         ];
     }
