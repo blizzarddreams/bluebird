@@ -9,16 +9,20 @@ import {
   Typography,
   lighten,
   Button,
+  Select,
+  MenuItem,
 } from "@material-ui/core";
 import { Photo as PhotoIcon } from "@material-ui/icons";
 import Cookies from "js-cookie";
 import { useHistory } from "react-router-dom";
 import Tags from "react-tagsinput";
+import { setFlagsFromString } from "v8";
 
 interface Fields {
   title: string;
   description: string;
   tags: string;
+  rating: "nsfw" | "sfw";
 }
 
 interface Errors {
@@ -82,6 +86,7 @@ const Upload = (): JSX.Element => {
     title: "",
     description: "",
     tags: "",
+    rating: "sfw",
   });
   const [errors, setErrors] = useState<Errors>({
     title: [],
@@ -98,17 +103,25 @@ const Upload = (): JSX.Element => {
     setFields({ ...fields, [name as string]: e.target.value });
   };
 
+  const handleSelectChange = (
+    e: React.ChangeEvent<{
+      name?: string;
+      value: unknown;
+    }>,
+    child: React.ReactNode
+  ): void => {
+    setFields({ ...fields, rating: e.target.value as "nsfw" | "sfw" });
+  };
+
   const handleUploadSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     const form = new FormData();
-    console.log(fields.description);
-    form.append("title", fields.title);
-    form.append("description", fields.description);
     if (fileRef?.current?.files) {
       form.append("image", fileRef.current.files[0]);
     }
-    form.append("tags", fields.tags);
-    form.append("rating", "sfw");
+    for (const [key, value] of Object.entries(fields)) {
+      form.append(key, value);
+    }
 
     fetch("/upload", {
       method: "POST",
@@ -121,9 +134,9 @@ const Upload = (): JSX.Element => {
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
-          history.push("/");
+          //history.push("/");
         } else {
-          setErrors({ ...data.errors });
+          setErrors({ ...errors, ...data.errors });
         }
       });
   };
@@ -191,6 +204,16 @@ const Upload = (): JSX.Element => {
             <PhotoIcon className={classes.buttonUpload} />
           </IconButton>
         </label>
+
+        <Select
+          label="rating"
+          value={fields.rating}
+          onChange={handleSelectChange}
+          name="rating"
+        >
+          <MenuItem value="sfw">SFW</MenuItem>
+          <MenuItem value="nsfw">NSFW</MenuItem>
+        </Select>
         <Button type="submit" className={classes.button}>
           Submit
         </Button>

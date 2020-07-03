@@ -27,32 +27,4 @@ class HomeController extends Controller
     {
         return view('home');
     }
-
-    /**
-     * Show the welcome page
-     *
-     * @return Illuminate\Http\Response
-     */
-    public function welcome()
-    {
-        $images = [];
-        if (Auth::check())
-        {
-            $user = Auth::user();
-            if ($user->age < 18)
-            {
-                $images = Image::where('nsfw', False)->orderByDesc('created_at')->get();
-            }
-            else
-            {
-                $images = Image::all()->sortByDesc('created_at');
-            }
-            return view("home", ["images" => $images]);
-        }
-        /*else
-        {
-            $images = Image::where('nsfw', False)->orderByDesc('created_at')->get();
-        }*/
-        return view('welcome', ['images' => $images]);
-    }
 }

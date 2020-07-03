@@ -66,19 +66,47 @@ class UserController extends Controller
     *
     * @return \Illuminate\Http\Response
     */
-    public function gallery($name)
+    public function gallery(Request $request, $name)
     {
-        $user = User::with(['images', 'images.user:id,name'])->where('name', 'ILIKE', $name)->firstOrFail();
+        $page = $request->query('page');
+        $offset = 0;
+
+        if ($page > 1) {
+            $offset = 40 * $page;
+        }
+
+        $user = User::where('name', 'ILIKE', $name)->firstOrFail();
         if (Auth::user()) {
             if (Auth::user()->age < 18) {
-                $user->images = $user->images->filter(function ($value, $key) {
-                    return $value->nsfw === false;
-                });
+                $user->images = Image::with('user:id,name')
+                    ->where([
+                        ['user_id', $user->id],
+                        ['nsfw', false],
+                    ])
+                    ->orderByDesc('created_at')
+                    ->limit(40)
+                    ->offset($offset)
+                    ->get();
+            } else {
+                $user->images = Image::with('user:id,name')
+                    ->where([
+                        ['user_id', $user->id],
+                    ])
+                    ->orderByDesc('created_at')
+                    ->limit(40)
+                    ->offset($offset)
+                    ->get();
             }
         } else {
-            $user->images = $user->images->filter(function ($value, $key) {
-                return $value->nsfw === false;
-            });
+            $user->images = Image::with('user:id,name')
+                ->where([
+                    ['user_id', $user->id],
+                    ['nsfw', false],
+                ])
+                ->orderByDesc('created_at')
+                ->limit(40)
+                ->offset($offset)
+                ->get();
         }
 
         if (Auth::user() && Auth::user()->id !== $user->id) {

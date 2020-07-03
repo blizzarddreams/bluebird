@@ -38,28 +38,36 @@ class ImageController extends Controller
 
     public function latest(Request $request)
     {
+        $page = $request->query('page');
+        $offset = 0;
+
+        if ($page > 1) {
+            $offset = 40 * $page;
+        }
+
         $images = [];
         if (Auth::check()) {
             $user = Auth::user();
-            if ($user->age <= 18) {
+            if ($user->age >= 18) {
                 $images = Image::with('user:id,name')
-                    ->all()
                     ->orderByDesc('created_at')
-                    ->limit(20)
-                    ->pluck('user.username')
+                    ->limit(40)
+                    ->offset($offset)
                     ->get();
             } else {
                 $images = Image::with('user:id,name')
                     ->where('nsfw', false)
                     ->orderByDesc('created_at')
-                    ->limit(20)
+                    ->limit(40)
+                    ->offset($offset)
                     ->get();
             }
         } else {
             $images = Image::with('user:id,name')
                 ->where('nsfw', false)
                 ->orderByDesc('created_at')
-                ->limit(20)
+                ->offset($offset)
+                ->limit(40)
                 ->get();
         }
         return response()->json(['success' => true, 'images' => $images]);
@@ -134,6 +142,16 @@ class ImageController extends Controller
         $validated = $request->validated();
 
         $user = Auth::user();
+
+        if ($user->age < 18 && $validated['rating'] === 'nsfw') {
+            return response()->json([
+                'success' => false,
+                'errors' => [
+                'image' => ['You cannot submit a NSFW image.'],
+                ],
+            ], 422);
+        }
+
         $image = new Image;
 
         $tags = explode(',', str_replace('/\s+/', '', $validated['tags']));

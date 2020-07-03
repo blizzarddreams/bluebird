@@ -1,15 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import {
-  Button,
-  Box,
-  Typography,
-  Theme,
-  darken,
-  Grid,
-} from "@material-ui/core";
+import { Box, Theme } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import ImageList from "./shared/ImageList";
+import InfiniteScroll from "react-infinite-scroller";
 
 interface User {
   name: string;
@@ -38,25 +31,42 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 const Home = (): JSX.Element => {
-  const [images, setImages] = useState<Image[]>();
-  const classes = useStyles();
+  const [images, setImages] = useState<Image[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(false);
 
   useEffect(() => {
-    fetch("/latest")
+    loadMoreImages();
+  }, []);
+
+  const loadMoreImages = (): void => {
+    setIsLoading(true);
+    fetch(`/latest?page=${page}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
-          setImages(data.images);
+          setImages([...images, ...data.images]);
+
+          setPage(page + 1);
+          setHasMore(data.images.length >= 40);
         }
+        setTimeout(() => setIsLoading(false), 1000);
       });
-  }, []);
+  };
 
   return (
-    <Box>
-      <Box display="flex" flexDirection="row" flexWrap="wrap">
-        {images && <ImageList images={images} />}
+    <InfiniteScroll
+      pageStart={1}
+      loadMore={loadMoreImages}
+      hasMore={!isLoading && hasMore}
+    >
+      <Box>
+        <Box display="flex" flexDirection="row" flexWrap="wrap">
+          {images && <ImageList images={images} />}
+        </Box>
       </Box>
-    </Box>
+    </InfiniteScroll>
   );
 };
 
