@@ -46,7 +46,7 @@ Route::get('/notifications-all', 'UserController@notifications');
 Route::post('/notifications/delete', 'UserController@deleteNotifications');
 Route::get('/notifications-number', 'UserController@notificationsLength');
 Route::post('/follow', 'UserController@follow');
-Route::get('/search', 'ImageController@search');
+Route::get('/search-images', 'ImageController@search');
 Route::get('/journals/{id}', 'JournalController@show');
 Route::get('/{path?}', [
     'uses' => 'HomeController@index',

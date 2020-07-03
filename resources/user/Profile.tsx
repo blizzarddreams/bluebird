@@ -144,7 +144,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "column",
-    backgroundColor: "#0d2030", //"#192a3d", //"#192a3d",
+    backgroundColor: "#66d0f91a", //"#192a3d", //"#192a3d",
     color: "#dff0f7",
     margin: theme.spacing(1),
     padding: theme.spacing(1),
@@ -169,7 +169,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "column",
-    backgroundColor: "#0d2030", //"#192a3d", //"#192a3d",
+    backgroundColor: "#66d0f91a", //"#192a3d", //"#192a3d",
     color: "#dff0f7",
     margin: theme.spacing(1),
     padding: theme.spacing(1),
@@ -180,10 +180,6 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   journalData: {
     marginTop: theme.spacing(1),
-  },
-  comments: {
-    width: "100%",
-    backgroundColor: "#66d0f91a", //"#0d2030", //"#192a3d",
   },
   button: {
     color: "#eee",
@@ -346,10 +342,7 @@ const Profile = (): JSX.Element => {
                   >
                     Submit
                   </Button>
-                  <Comments
-                    comments={user?.profile_comments}
-                    className={classes.comments}
-                  />
+                  <Comments comments={user?.profile_comments} />
                 </Box>
               </Paper>
             </Grid>

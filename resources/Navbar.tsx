@@ -160,10 +160,10 @@ const Navbar = (): JSX.Element => {
     <AppBar className={classes.navBar} position="fixed">
       <Toolbar className={classes.toolBar}>
         <Box display="flex" alignItems="center">
-          <Link to="/">
-            <IconButton className={classes.navBarLink}>
+          <Link to="/" className={classes.navBarLink}>
+            <Box display="flex" flexDirection="row" alignItems="center">
               Bluebird <HomeIcon />
-            </IconButton>
+            </Box>
           </Link>
           <Box className={classes.search}>
             <Box className={classes.searchIcon}>

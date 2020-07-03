@@ -105,27 +105,38 @@ class ImageController extends Controller
 
     public function search(Request $request)
     {
-        $page = intval($request->query('page'));
-        $tags = explode(' ', $request->query('qs'));
-        $qs = $request->query('qs');
-        $skip = 0;
+        $page = $request->query('page');
+        $offset = 0;
 
-        if ($page !== 1) {
-            $skip = ($page - 1) * 40;
+        if ($page > 1) {
+            $offset = 40 * $page;
         }
 
+        $tags = explode(' ', $request->query('qs'));
+        $qs = $request->query('qs');
 
+        $images = [];
 
-        $images = Image
-            ::with('user:id,name,email')
-            ->whereHas('tags', function ($query) use ($tags) {
-                $query->whereIn('name', $tags);
-            })
-            ->orWhere('title', 'ILIKE', '%'.$qs.'%')
-            ->skip($skip)
-            ->take(40)
-            ->get();
-
+        if (Auth::check() && Auth::user()->age >= 18) {
+            $images = Image::with('user:id,name,email')
+                ->whereHas('tags', function ($query) use ($tags) {
+                    $query->whereIn('name', $tags);
+                })
+                ->orWhere('title', 'ILIKE', '%'.$qs.'%')
+                ->limit(40)
+                //->offset($offset)
+                ->get();
+        } else {
+            $images = Image::with('user:id,name,email')
+                ->whereHas('tags', function ($query) use ($tags) {
+                    $query->whereIn('name', $tags);
+                })
+                ->orWhere('title', 'ILIKE', '%'.$qs.'%')
+                ->where('nsfw', false)
+                ->limit(40)
+                ->offset($offset)
+                ->get();
+        }
         return response()->json(['success' => true, 'images' => $images]);//->images()->get()]);
     }
 

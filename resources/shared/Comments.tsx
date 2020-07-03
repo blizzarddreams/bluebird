@@ -32,34 +32,46 @@ interface Comment {
 
 interface CommentsProps {
   comments: Comment[];
-  className?: string;
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
   comment: {
     margin: theme.spacing(1),
     width: "95%",
-    backgroundColor: "#0d2030", //"#08141e",
+    backgroundColor: "#66d0f91a", //"#08141e",
     color: "#eee",
+  },
+  commentUsername: {
+    color: "#3cec70",
+    textDecoration: "none",
   },
 }));
 
-const Comments = ({ comments, className }: CommentsProps): JSX.Element => {
+const Comments = ({ comments }: CommentsProps): JSX.Element => {
   const classes = useStyles();
 
-  const testIDK = (e: React.MouseEvent<HTMLParagraphElement>): void => {};
   return (
     <>
       {comments.map((comment) => (
-        <Card className={`${classes.comment} ${className}`} key={comment.id}>
+        <Card className={classes.comment} key={comment.id}>
           <CardContent>
             <Grid container>
               <Grid item xs={2}>
                 <Box display="flex" flexDirection="column" alignItems="center">
-                  <p onClick={testIDK}>afewa</p>
-                  <Link to={`/profile/${comment.user.name}`}>
-                    <Gravatar email={comment.user.email} size={8} />
-                    <Typography variant="body1">{comment.user.name}</Typography>
+                  <Link
+                    to={`/profile/${comment.user.name}`}
+                    className={classes.commentUsername}
+                  >
+                    <Box
+                      display="flex"
+                      alignItems="center"
+                      flexDirection="column"
+                    >
+                      <Gravatar email={comment.user.email} size={8} />
+                      <Typography variant="body1">
+                        {comment.user.name}
+                      </Typography>
+                    </Box>
                   </Link>
                   <Typography>
                     {comment.created_at === comment.updated_at ? (

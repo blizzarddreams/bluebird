@@ -167,13 +167,11 @@ const useStyles = makeStyles((theme: Theme) => ({
   imageContainer: {
     width: "100%",
     height: "100%",
-    backgroundColor: "#0d2030", //"#08141e",
+    padding: theme.spacing(1),
+    backgroundColor: "#66d0f91a", //"#08141e",
   },
-  comment: {
+  commentContainer: {
     margin: theme.spacing(1),
-    width: "95%",
-    backgroundColor: "#0d2030", //"#08141e",
-    color: "#eee",
   },
   input: {
     color: "#eee",
@@ -198,7 +196,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   submitButton: {
     color: "#eee",
-    bacgkroundColor: "#288d75", //"#01090f",
+    backgroundColor: "#288d75", //"#01090f",
     "&:hover": {
       backgroundColor: lighten("#288d75", 0.1),
     },
@@ -442,7 +440,12 @@ const ViewImage = (): JSX.Element => {
             </Box>
           </Grid>
           <Grid item xs={12}>
-            <Box display="flex" flexDirection="column" alignItems="center">
+            <Box
+              display="flex"
+              flexDirection="column"
+              alignItems="center"
+              className={classes.commentContainer}
+            >
               <Comments comments={image?.comments} />
 
               <Box
@@ -451,17 +454,15 @@ const ViewImage = (): JSX.Element => {
                 onSubmit={handleCommentSubmit}
               >
                 <TextField
-                  name="title"
+                  name="comment"
                   id="outlined-basic"
-                  label="Title"
+                  label="Comment"
                   fullWidth
                   value={text}
                   multiline
                   rows={"8"}
                   onChange={handleTextChange}
                   variant="outlined"
-                  //error={!!errors.title.length}
-                  //helperText={errors.title.join("\n")}
                   classes={{
                     root: classes.input,
                   }}
@@ -471,7 +472,7 @@ const ViewImage = (): JSX.Element => {
                   variant="contained"
                   className={classes.submitButton}
                 >
-                  ok
+                  Submit
                 </Button>
               </Box>
             </Box>
