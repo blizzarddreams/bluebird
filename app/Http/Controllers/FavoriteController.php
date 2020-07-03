@@ -28,7 +28,7 @@ class FavoriteController extends Controller
      */
     public function create(Request $request, $id) //favorite
     {
-
+        //
     }
 
     /**

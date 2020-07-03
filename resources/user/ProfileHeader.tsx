@@ -10,10 +10,7 @@ import {
 } from "@material-ui/core";
 import Gravatar from "../util/Gravatar";
 import Moment from "../util/Moment";
-import {
-  CalendarToday as RegisteredIcon,
-  Cake as BirthdayIcon,
-} from "@material-ui/icons";
+import { CalendarToday as RegisteredIcon } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
 

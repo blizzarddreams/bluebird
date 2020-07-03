@@ -1,7 +1,6 @@
 import React, { useState, useRef } from "react";
 import {
   makeStyles,
-  Theme,
   Box,
   fade,
   TextField,
@@ -14,9 +13,6 @@ import {
 } from "@material-ui/core";
 import { Photo as PhotoIcon } from "@material-ui/icons";
 import Cookies from "js-cookie";
-import { useHistory } from "react-router-dom";
-import Tags from "react-tagsinput";
-import { setFlagsFromString } from "v8";
 
 interface Fields {
   title: string;
@@ -81,7 +77,6 @@ const useStyles = makeStyles(() => ({
 }));
 
 const Upload = (): JSX.Element => {
-  const history = useHistory();
   const [fields, setFields] = useState<Fields>({
     title: "",
     description: "",
@@ -107,8 +102,7 @@ const Upload = (): JSX.Element => {
     e: React.ChangeEvent<{
       name?: string;
       value: unknown;
-    }>,
-    child: React.ReactNode
+    }>
   ): void => {
     setFields({ ...fields, rating: e.target.value as "nsfw" | "sfw" });
   };

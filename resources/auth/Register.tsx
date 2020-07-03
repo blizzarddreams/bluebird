@@ -9,7 +9,6 @@ import MomentUtils from "@date-io/moment";
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
-  DatePicker,
 } from "@material-ui/pickers";
 import {
   makeStyles,

@@ -7,7 +7,6 @@ import {
   Typography,
   makeStyles,
   Theme,
-  TextField,
 } from "@material-ui/core";
 import Gravatar from "../util/Gravatar";
 import Moment from "../util/Moment";

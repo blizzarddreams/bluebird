@@ -6,18 +6,12 @@ import {
   makeStyles,
   Theme,
   Typography,
-  ButtonGroup,
   Button,
-  IconButton,
   lighten,
-  Card,
-  CardContent,
   fade,
   TextField,
 } from "@material-ui/core";
-import { CallMissedSharp } from "@material-ui/icons";
 import {
-  StarBorder as StarBorderIcon,
   Star as StarIcon,
   GetApp as DownloadIcon,
   LocalActivityOutlined as FeatureIcon,
@@ -261,7 +255,7 @@ const ViewImage = (): JSX.Element => {
       });
   };
 
-  const handleFavorite = (e: React.MouseEvent<HTMLButtonElement>): void => {
+  const handleFavorite = (): void => {
     fetch("/image/favorite", {
       method: "POST",
       body: JSON.stringify({ id: image?.id }),
@@ -281,7 +275,7 @@ const ViewImage = (): JSX.Element => {
       });
   };
 
-  const handleFeature = (e: React.MouseEvent<HTMLButtonElement>): void => {
+  const handleFeature = (): void => {
     fetch("/image/feature", {
       method: "POST",
       body: JSON.stringify({ id: image?.id }),

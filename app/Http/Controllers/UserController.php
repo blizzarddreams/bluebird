@@ -329,7 +329,6 @@ class UserController extends Controller
         if ($user->password === null) {
             $user->password = Hash::make($request->newpassword);
             $user->save();
-
         } else {
             $request->validate([
                 'newpassword' => 'required|min:6|same:confirmnewpassword',
@@ -356,4 +355,4 @@ class UserController extends Controller
     {
       //
     }
-  }
+}

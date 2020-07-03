@@ -51,7 +51,6 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 const Login = (): JSX.Element => {
-  const darkMode = false; // placeholder
   const history = useHistory();
   const classes = useStyles();
   const csrf = Cookies.get("XSRF-TOKEN")!;

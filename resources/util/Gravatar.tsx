@@ -2,7 +2,6 @@ import React from "react";
 import { createHash } from "crypto";
 import { Avatar } from "@material-ui/core";
 import { makeStyles, Theme } from "@material-ui/core/styles";
-import PropTypes from "prop-types";
 interface Style {
   size: number;
 }

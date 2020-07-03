@@ -129,7 +129,7 @@ const Notifications = (): JSX.Element => {
   };
 
   const handleTabChange = (
-    e: React.ChangeEvent<{}>,
+    e: React.ChangeEvent<unknown>,
     newValue: number
   ): void => {
     setValue(newValue);

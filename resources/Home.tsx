@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, Theme } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import { Box } from "@material-ui/core";
 import ImageList from "./shared/ImageList";
 import InfiniteScroll from "react-infinite-scroller";
 
@@ -20,15 +19,6 @@ interface Image {
   user_id: number;
   user: User;
 }
-
-const useStyles = makeStyles((theme: Theme) => ({
-  nsfw: {
-    border: `${theme.spacing(0.5)}px solid #9E0031`,
-  },
-  sfw: {
-    border: `${theme.spacing(0.5)}px solid #21A179`, //#81AE9D
-  },
-}));
 
 const Home = (): JSX.Element => {
   const [images, setImages] = useState<Image[]>([]);

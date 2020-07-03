@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Cookies from "js-cookie";
 import { useHistory } from "react-router-dom";
-import { Pagination } from "@material-ui/lab";
 import { TextField, Box } from "@material-ui/core";
 import ImageList from "./shared/ImageList";
 import InfiniteScroll from "react-infinite-scroller";

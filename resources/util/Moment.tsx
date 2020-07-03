@@ -1,18 +1,7 @@
-import React, { useContext } from "react";
+import React from "react";
 import moment, { Moment } from "moment";
-import { Tooltip, makeStyles, Box } from "@material-ui/core";
-import DarkModeContext from "../DarkMode";
+import { Tooltip, Box } from "@material-ui/core";
 
-interface StyleProps {
-  darkMode: boolean;
-}
-
-const useStyles = makeStyles(() => ({
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  /*  moment: {
-    color: props.darkMode ? "#b8c5d9bd" : "#070b0fbd",
-  }),*/
-}));
 interface MomentProps {
   timestamp: string;
   relative?: boolean;

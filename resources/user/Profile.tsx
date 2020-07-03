@@ -12,14 +12,8 @@ import {
   lighten,
   Paper,
 } from "@material-ui/core";
-import Gravatar from "../util/Gravatar";
 import Moment from "../util/Moment";
-import {
-  CalendarToday as RegisteredIcon,
-  Cake as BirthdayIcon,
-} from "@material-ui/icons";
 import Comments from "../shared/Comments";
-import { text } from "@fortawesome/fontawesome-svg-core";
 import Cookies from "js-cookie";
 import ProfileHeader from "./ProfileHeader";
 

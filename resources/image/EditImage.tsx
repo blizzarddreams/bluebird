@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import {
   makeStyles,
-  Theme,
   Box,
   fade,
   TextField,
@@ -13,8 +12,6 @@ import {
 import { Photo as PhotoIcon } from "@material-ui/icons";
 import Cookies from "js-cookie";
 import { useHistory, useParams } from "react-router-dom";
-import Tags from "react-tagsinput";
-import Upload from "../user/Upload";
 
 interface Fields {
   title: string;

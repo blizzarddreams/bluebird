@@ -1,6 +1,7 @@
 <?php
 
 namespace Bluebird\Http\Controllers;
+
 use Bluebird\Image;
 use Illuminate\Support\Facades\Auth;
 

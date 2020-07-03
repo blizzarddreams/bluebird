@@ -3,7 +3,6 @@ import {
   Toolbar,
   AppBar,
   InputBase,
-  Typography,
   IconButton,
   Box,
   makeStyles,
@@ -17,7 +16,6 @@ import {
   Home as HomeIcon,
   Publish as PublishIcon,
   Book as JournalIcon,
-  ExitToAppRounded as LogOutIcon,
 } from "@material-ui/icons";
 import Gravatar from "./util/Gravatar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -28,34 +26,8 @@ import {
   faBell,
 } from "@fortawesome/free-solid-svg-icons";
 
-interface Style {
-  darkMode: boolean;
-}
-
-interface Comment {
-  id: number;
-  created_at: string;
-  data: string;
-  image_id?: string;
-  journal_id?: string;
-  profile_id?: string;
-}
-
-interface Image {}
-interface Journal {}
-interface Favorite {}
-interface Follow {}
-
-interface Notification {
-  created_at: string;
-  comment?: Comment;
-  image?: Image;
-  journal?: Journal;
-  favorite?: Favorite;
-  follow?: Follow;
-}
 const useStyles = makeStyles((theme: Theme) => ({
-  navBar: (props: Style) => ({
+  navBar: () => ({
     backgroundColor: "#13232d", //"#020f17", //"#00070c", //"#01090f",
     boxShadow: "none",
     marginBottom: theme.spacing(4),
@@ -65,7 +37,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     flexDirection: "row",
     justifyContent: "space-between",
   },
-  search: (props: Style) => ({
+  search: () => ({
     backgroundColor: fade("#13232d", 0.1), //fade("#01090f", 0.1),
 
     position: "relative",
@@ -81,7 +53,7 @@ const useStyles = makeStyles((theme: Theme) => ({
       width: "auto",
     },
   }),
-  input: (props: Style) => ({
+  input: () => ({
     color: "transparent", //props.darkMode ? "#080b17" : "#dff0f7",
     padding: theme.spacing(1, 1, 1, 4),
     transition: theme.transitions.create("width"),
@@ -91,7 +63,7 @@ const useStyles = makeStyles((theme: Theme) => ({
       width: theme.spacing(40),
     },
   }),
-  searchIcon: (props: Style) => ({
+  searchIcon: () => ({
     padding: theme.spacing(0, 1),
     height: "100%",
     position: "absolute",

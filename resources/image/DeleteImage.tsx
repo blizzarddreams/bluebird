@@ -1,20 +1,14 @@
 import React, { useState, useRef, useEffect } from "react";
 import {
   makeStyles,
-  Theme,
   Box,
   fade,
-  TextField,
-  IconButton,
   Typography,
   lighten,
   Button,
 } from "@material-ui/core";
-import { Photo as PhotoIcon } from "@material-ui/icons";
 import Cookies from "js-cookie";
 import { useHistory, useParams } from "react-router-dom";
-import Tags from "react-tagsinput";
-import Upload from "../user/Upload";
 
 interface Fields {
   title: string;
@@ -106,10 +100,11 @@ const DeleteImage = (): JSX.Element => {
       });
   }, []);
 
+  /*
   const handleFieldChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const name = e.target.getAttribute("name");
     setFields({ ...fields, [name as string]: e.target.value });
-  };
+  };*/
 
   const handleEditSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();

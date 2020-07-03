@@ -5,12 +5,9 @@ import {
   Typography,
   makeStyles,
   Theme,
-  fade,
   lighten,
   Grid,
   Paper,
-  Card,
-  CardContent,
 } from "@material-ui/core";
 import { Pagination } from "@material-ui/lab";
 import ProfileHeader from "./ProfileHeader";
@@ -21,7 +18,15 @@ interface Journal {
   updated_at: string;
   data: string;
   title: string;
-  comments: any[];
+  comments: Comment[];
+}
+
+interface Comment {
+  id: number;
+  created_at: string;
+  updated_at: string;
+  data: string;
+  user: User;
 }
 interface User {
   id: number;
@@ -79,7 +84,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 const Journals = (): JSX.Element => {
   const classes = useStyles();
   const [journalCount, setJournalCount] = useState(1);
-  const [page, setPage] = useState(1);
+  const [, setPage] = useState(1);
   const { username } = useParams();
   const [user, setUser] = useState<User>(undefined!);
   useEffect(() => {
