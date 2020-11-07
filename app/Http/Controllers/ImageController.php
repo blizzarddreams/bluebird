@@ -214,7 +214,7 @@ class ImageController extends Controller
 
         $image = Image::with('user:id,email,name')
             ->with(['comments', 'comments.user:id,email,name'])
-            ->with(['tags:tag_id,name'])
+            ->with(['tags:name'])
             ->find($id);
 
         $this->authorize('view', $image);

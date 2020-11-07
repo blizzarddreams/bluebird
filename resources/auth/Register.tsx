@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import Cookies from "js-cookie";
-import DarkModeContext from "../DarkMode";
+//import DarkModeContext from "../DarkMode";
 import { GitHub as GitHubIcon } from "@material-ui/icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
@@ -75,9 +75,11 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
   },
   datePicker: {
+    backgroundColor: "#66d0f91a",
     width: "40%",
     "& .MuiInputBase-root": {
       color: "#eee",
+      padding: "1rem",
     },
     "& .MuiSvgIcon-root": {
       color: "#eee",
@@ -87,8 +89,8 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const Register = (): JSX.Element => {
   const csrf = Cookies.get("XSRF-TOKEN")!;
-  const darkMode = useContext(DarkModeContext);
-  const classes = useStyles({ darkMode });
+  //const darkMode = useContext(DarkModeContext);
+  const classes = useStyles();
   const [errors, setErrors] = useState({
     name: [],
     password: [],
